@@ -257,6 +257,13 @@ html {
     width: 20%;
 }
 
+.item__thumb {
+    position: relative;
+    overflow: hidden;
+    border-radius: 18px;
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.25);
+}
+
 .item {
     opacity: 0;
     transform: translateY(50%);
@@ -269,6 +276,97 @@ html {
 
 .item__img {
     width: 100%;
+    border-radius: 18px;
+    display: block;
+    object-fit: cover;
+    animation-duration: 12s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+.item__img--night {
+    animation-name: night-hike-pan;
+    filter: brightness(1.03) saturate(1.05);
+}
+
+.item__img--camp {
+    animation-name: campfire-glow;
+    animation-duration: 10s;
+    filter: saturate(1.1);
+}
+
+.item__img--river {
+    animation-name: river-flow;
+    animation-duration: 14s;
+    filter: saturate(1.08);
+}
+
+.item__overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    mix-blend-mode: screen;
+}
+
+.item__overlay--stars {
+    background: radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0) 20%),
+                radial-gradient(circle at 70% 60%, rgba(166, 215, 255, 0.45) 0%, rgba(166, 215, 255, 0) 22%),
+                radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 15%);
+    animation: stars-twinkle 4s ease-in-out infinite;
+}
+
+.item__overlay--embers {
+    background: radial-gradient(circle at 30% 40%, rgba(255, 196, 140, 0.38) 0%, rgba(255, 196, 140, 0) 18%),
+                radial-gradient(circle at 70% 65%, rgba(255, 120, 70, 0.35) 0%, rgba(255, 120, 70, 0) 22%),
+                radial-gradient(circle at 45% 75%, rgba(255, 230, 170, 0.28) 0%, rgba(255, 230, 170, 0) 20%);
+    animation: ember-float 5s ease-in-out infinite;
+    mix-blend-mode: overlay;
+}
+
+.item__overlay--ripple {
+    background: radial-gradient(circle at 50% 50%, rgba(200, 240, 255, 0.2) 0%, rgba(200, 240, 255, 0) 50%);
+    animation: water-ripple 6s ease-in-out infinite;
+    mix-blend-mode: screen;
+}
+
+@keyframes night-hike-pan {
+    0% { transform: scale(1.03) translateY(0); }
+    50% { transform: scale(1.07) translateY(-6px) translateX(-4px); }
+    100% { transform: scale(1.12) translateY(-10px) translateX(4px); }
+}
+
+@keyframes campfire-glow {
+    0% { transform: scale(1.02) translateX(0); filter: brightness(1); }
+    25% { transform: scale(1.05) translateX(-4px); filter: brightness(1.08) saturate(1.05); }
+    50% { transform: scale(1.07) translateX(4px); filter: brightness(1.12) saturate(1.12); }
+    75% { transform: scale(1.06) translateX(-2px); filter: brightness(1.05) saturate(1.08); }
+    100% { transform: scale(1.08) translateX(6px); filter: brightness(1.1) saturate(1.1); }
+}
+
+@keyframes river-flow {
+    0% { transform: scale(1.02) translateY(0) translateX(0); filter: brightness(1); }
+    33% { transform: scale(1.05) translateY(-4px) translateX(6px); filter: brightness(1.06); }
+    66% { transform: scale(1.08) translateY(-7px) translateX(-6px); filter: brightness(1.1) saturate(1.05); }
+    100% { transform: scale(1.12) translateY(-10px) translateX(3px); filter: brightness(1.12) saturate(1.08); }
+}
+
+@keyframes stars-twinkle {
+    0%, 100% { opacity: 0.3; transform: translateY(0); }
+    50% { opacity: 0.8; transform: translateY(-4px); }
+}
+
+@keyframes ember-float {
+    0% { opacity: 0.4; transform: translateY(0) scale(1); }
+    50% { opacity: 0.7; transform: translateY(-8px) scale(1.05); }
+    100% { opacity: 0.35; transform: translateY(-14px) scale(1.08); }
+}
+
+@keyframes water-ripple {
+    0% { opacity: 0.45; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.12); }
+    100% { opacity: 0.45; transform: scale(1.02); }
 }
 
 .item__subtitle {
@@ -285,7 +383,7 @@ html {
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 500;
-    font-size: max(0.9vw, 14px);;
+    font-size: max(0.9vw, 14px);
     line-height: 150%;
     color: #FFFFFF;
 }
