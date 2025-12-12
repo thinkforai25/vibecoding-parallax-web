@@ -251,6 +251,7 @@ html {
     display: flex;
     justify-content: space-evenly;
     height:fit-content;
+    gap: 30px;
 }
 
 .content__item{
@@ -267,8 +268,130 @@ html {
     transform: translateY(0%);
 }
 
+.item__media {
+    position: relative;
+    border-radius: 18px;
+    overflow: hidden;
+    isolation: isolate;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+    transform: translateZ(0);
+    transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.45s ease;
+}
+
+.item__media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.15), transparent 40%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.12), transparent 38%),
+                radial-gradient(circle at 60% 80%, rgba(255, 255, 255, 0.18), transparent 36%);
+    mix-blend-mode: screen;
+    opacity: 0.6;
+    pointer-events: none;
+    animation-play-state: paused;
+}
+
+.item__media--night::after {
+    animation: night-sparkle 12s ease-in-out infinite;
+}
+
+.item__media--camp::after {
+    animation: camp-embers 8s ease-in-out infinite;
+}
+
+.item__media--river::after {
+    animation: river-shimmer 14s ease-in-out infinite;
+}
+
 .item__img {
     width: 100%;
+    display: block;
+    object-fit: cover;
+    aspect-ratio: 4 / 5;
+    transform-origin: center;
+    transform: scale(1);
+    animation-duration: 12s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-play-state: paused;
+}
+
+.item__img--night {
+    animation-name: night-hike-pan;
+    filter: saturate(1.08);
+}
+
+.item__img--camp {
+    animation-name: campfire-glow;
+    animation-duration: 9s;
+    filter: contrast(1.05) saturate(1.1);
+}
+
+.item__img--river {
+    animation-name: river-flow;
+    animation-duration: 13s;
+    filter: saturate(1.05);
+}
+
+.item__media:hover,
+.item__media:focus-within {
+    transform: scale(1.12) rotate(-1deg);
+    box-shadow: 0 28px 65px rgba(0, 0, 0, 0.38);
+}
+
+.item__media:hover .item__img,
+.item__media:focus-within .item__img,
+.item__media:hover::after,
+.item__media:focus-within::after {
+    animation-play-state: running;
+}
+
+.item__media:hover .item__img,
+.item__media:focus-within .item__img {
+    filter: saturate(1.25) brightness(1.08) contrast(1.08);
+}
+
+@keyframes night-hike-pan {
+    0% { transform: scale(1.08) translate(-6%, -2%) rotate(-1deg); }
+    35% { transform: scale(1.15) translate(3%, -6%) rotate(-2deg); }
+    65% { transform: scale(1.18) translate(-4%, -10%) rotate(-1.5deg); }
+    100% { transform: scale(1.22) translate(6%, -12%) rotate(-2.5deg); }
+}
+
+@keyframes campfire-glow {
+    0% { transform: scale(1.06) translateX(0) rotate(0deg); filter: brightness(1) hue-rotate(0deg); }
+    25% { transform: scale(1.15) translateX(-6%) rotate(-2deg); filter: brightness(1.15) hue-rotate(-12deg) saturate(1.1); }
+    55% { transform: scale(1.18) translateX(6%) rotate(2deg); filter: brightness(1.22) hue-rotate(10deg) saturate(1.15); }
+    100% { transform: scale(1.2) translateX(-4%) rotate(-3deg); filter: brightness(1.12) hue-rotate(-8deg) saturate(1.08); }
+}
+
+@keyframes river-flow {
+    0% { transform: scale(1.05) translate(0, -2%) rotate(-0.4deg); }
+    30% { transform: scale(1.12) translate(3%, -7%) rotate(-1deg); }
+    60% { transform: scale(1.15) translate(-4%, -11%) rotate(1deg); }
+    100% { transform: scale(1.19) translate(5%, -6%) rotate(-0.6deg); }
+}
+
+@keyframes night-sparkle {
+    0% { transform: translate(0, 0) scale(1); opacity: 0.45; }
+    40% { transform: translate(10%, -8%) scale(1.05); opacity: 0.85; }
+    75% { transform: translate(-8%, 6%) scale(1.08); opacity: 0.7; }
+    100% { transform: translate(6%, -4%) scale(1.04); opacity: 0.9; }
+}
+
+@keyframes camp-embers {
+    0% { transform: translateY(0) scale(1); opacity: 0.45; }
+    30% { transform: translateY(-10%) scale(1.08); opacity: 0.9; }
+    70% { transform: translateY(-4%) scale(1.05); opacity: 0.65; }
+    100% { transform: translateY(0) scale(1); opacity: 0.5; }
+}
+
+@keyframes river-shimmer {
+    0% { transform: translateX(0) scale(1); opacity: 0.4; }
+    50% { transform: translateX(-12%) scale(1.05); opacity: 0.82; }
+    100% { transform: translateX(12%) scale(1.02); opacity: 0.55; }
 }
 
 .item__subtitle {
@@ -285,7 +408,7 @@ html {
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 500;
-    font-size: max(0.9vw, 14px);;
+    font-size: max(0.9vw, 14px);
     line-height: 150%;
     color: #FFFFFF;
 }
