@@ -53,10 +53,27 @@ html {
     left: 50%;
 }
 .deer {
+    --deer-x: -45%;
+    --deer-y: 10%;
+    --deer-bob: 0%;
     width: 170%;
-    transform: translate(-45%, 10%);
+    transform: translate(var(--deer-x), calc(var(--deer-y) + var(--deer-bob)));
+    transition: transform 0.15s linear, width 0.15s linear;
     bottom: 0;
     left: 50%;
+}
+
+.deer.walking {
+    animation: deer-walk-bob 0.8s ease-in-out infinite;
+}
+
+@keyframes deer-walk-bob {
+    0%, 100% {
+        --deer-bob: 0%;
+    }
+    50% {
+        --deer-bob: -2%;
+    }
 }
 
 .main {

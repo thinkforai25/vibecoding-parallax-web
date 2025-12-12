@@ -26,7 +26,20 @@ window.addEventListener('load', () => {
         let deer = document.querySelector('.deer');
         let deerWidth = screenWidth * 1.7;
         deer.style.width = `${deerWidth - (screenWidth * 0.55 * parallaxScrollPercent / 100)}px`;
-        deer.style.transform = `translate(-${ 45 + (5 * parallaxScrollPercent / 100) }%, 10%)`;
+        deer.style.setProperty('--deer-x', `-${45 + (5 * parallaxScrollPercent / 100)}%`);
+    })
+
+    let deerWalkTimeout;
+    const deer = document.querySelector('.deer');
+
+    window.addEventListener('scroll', () => {
+        if (!deer) return;
+        deer.classList.add('walking');
+
+        clearTimeout(deerWalkTimeout);
+        deerWalkTimeout = setTimeout(() => {
+            deer.classList.remove('walking');
+        }, 150);
     })
 
     //=============================================================================================
