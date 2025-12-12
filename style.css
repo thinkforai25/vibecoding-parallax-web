@@ -261,6 +261,8 @@ html {
     opacity: 0;
     transform: translateY(50%);
     transition: all 1s ease;
+    position: relative;
+    overflow: hidden;
 }
 .item.visible {
     opacity: 1;
@@ -270,18 +272,70 @@ html {
 .item__img {
     width: 100%;
     display: block;
+    position: relative;
+    z-index: 1;
 }
 
 .item--night .item__img {
     animation: floatUp 6s ease-in-out infinite;
 }
 
+.item--night::after {
+    content: "";
+    position: absolute;
+    left: 32%;
+    bottom: 18%;
+    width: 36%;
+    height: 55%;
+    background: radial-gradient(circle at 40% 60%, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.25) 25%, rgba(255, 255, 255, 0) 60%),
+                radial-gradient(circle at 65% 30%, rgba(200, 230, 255, 0.35) 0%, rgba(200, 230, 255, 0.15) 28%, rgba(200, 230, 255, 0) 60%);
+    filter: blur(1px);
+    opacity: 0.8;
+    animation: smokeRise 7s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 2;
+}
+
 .item--camp .item__img {
     animation: campfireGlow 5s ease-in-out infinite;
 }
 
+.item--camp::after {
+    content: "";
+    position: absolute;
+    right: 12%;
+    bottom: -20%;
+    width: 90px;
+    height: 90px;
+    background: radial-gradient(circle at 35% 35%, #fffbe6 0 40%, rgba(255, 255, 255, 0.15) 70%);
+    border-radius: 50%;
+    box-shadow: 0 0 18px rgba(255, 245, 204, 0.6), 0 0 32px rgba(255, 245, 204, 0.45);
+    animation: moonRise 12s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 2;
+}
+
 .item--river .item__img {
     animation: riverRipple 7s ease-in-out infinite;
+}
+
+.item--river::after {
+    content: "";
+    position: absolute;
+    left: -60%;
+    bottom: 12%;
+    width: 220%;
+    height: 38%;
+    background: repeating-linear-gradient(-70deg,
+        rgba(96, 193, 255, 0.35) 0,
+        rgba(96, 193, 255, 0.35) 10%,
+        rgba(255, 255, 255, 0.28) 12%,
+        rgba(96, 193, 255, 0.28) 20%);
+    mix-blend-mode: screen;
+    opacity: 0.9;
+    animation: riverFlow 5s linear infinite;
+    pointer-events: none;
+    z-index: 2;
 }
 
 .item__subtitle {
@@ -309,10 +363,25 @@ html {
     100% { transform: translateY(0); }
 }
 
+@keyframes smokeRise {
+    0% { transform: translateY(20px) scale(0.9); opacity: 0; }
+    20% { opacity: 0.7; }
+    50% { transform: translateY(-10px) scale(1); opacity: 0.8; }
+    80% { opacity: 0.4; }
+    100% { transform: translateY(-40px) scale(1.1); opacity: 0; }
+}
+
 @keyframes campfireGlow {
     0% { filter: drop-shadow(0 0 0px rgba(255, 183, 94, 0.4)); transform: scale(1); }
     50% { filter: drop-shadow(0 0 18px rgba(255, 183, 94, 0.6)); transform: scale(1.03); }
     100% { filter: drop-shadow(0 0 0px rgba(255, 183, 94, 0.4)); transform: scale(1); }
+}
+
+@keyframes moonRise {
+    0% { transform: translateY(90px) scale(0.8); opacity: 0; }
+    20% { opacity: 1; }
+    60% { transform: translateY(-10px) scale(1); }
+    100% { transform: translateY(-30px) scale(1); opacity: 0.9; }
 }
 
 @keyframes riverRipple {
@@ -320,6 +389,11 @@ html {
     40% { transform: scale(1.02) translateY(-6px); filter: saturate(1.05); }
     70% { transform: scale(1.01) translateY(4px); filter: saturate(1.1); }
     100% { transform: scale(1) translateY(0); filter: saturate(1); }
+}
+
+@keyframes riverFlow {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(50%); }
 }
 
 @media (any-hover: hover) {
