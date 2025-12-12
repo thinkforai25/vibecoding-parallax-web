@@ -269,6 +269,19 @@ html {
 
 .item__img {
     width: 100%;
+    display: block;
+}
+
+.item--night .item__img {
+    animation: floatUp 6s ease-in-out infinite;
+}
+
+.item--camp .item__img {
+    animation: campfireGlow 5s ease-in-out infinite;
+}
+
+.item--river .item__img {
+    animation: riverRipple 7s ease-in-out infinite;
 }
 
 .item__subtitle {
@@ -288,6 +301,25 @@ html {
     font-size: max(0.9vw, 14px);;
     line-height: 150%;
     color: #FFFFFF;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px) scale(1.02); }
+    100% { transform: translateY(0); }
+}
+
+@keyframes campfireGlow {
+    0% { filter: drop-shadow(0 0 0px rgba(255, 183, 94, 0.4)); transform: scale(1); }
+    50% { filter: drop-shadow(0 0 18px rgba(255, 183, 94, 0.6)); transform: scale(1.03); }
+    100% { filter: drop-shadow(0 0 0px rgba(255, 183, 94, 0.4)); transform: scale(1); }
+}
+
+@keyframes riverRipple {
+    0% { transform: scale(1) translateY(0); filter: saturate(1); }
+    40% { transform: scale(1.02) translateY(-6px); filter: saturate(1.05); }
+    70% { transform: scale(1.01) translateY(4px); filter: saturate(1.1); }
+    100% { transform: scale(1) translateY(0); filter: saturate(1); }
 }
 
 @media (any-hover: hover) {
