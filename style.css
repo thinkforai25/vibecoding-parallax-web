@@ -53,26 +53,32 @@ html {
     left: 50%;
 }
 .deer {
-    --deer-x: -45%;
+    --deer-x: -50%;
     --deer-y: 10%;
     --deer-bob: 0%;
+    --deer-step: 0%;
+    --deer-tilt: 0deg;
     width: 170%;
-    transform: translate(var(--deer-x), calc(var(--deer-y) + var(--deer-bob)));
-    transition: transform 0.15s linear, width 0.15s linear;
+    transform: translate(calc(var(--deer-x) + var(--deer-step)), calc(var(--deer-y) + var(--deer-bob))) rotate(var(--deer-tilt));
+    transition: transform 0.25s ease-out, width 0.25s ease-out;
     bottom: 0;
     left: 50%;
 }
 
 .deer.walking {
-    animation: deer-walk-bob 0.8s ease-in-out infinite;
+    animation: deer-walk-cycle 0.8s ease-in-out infinite;
 }
 
-@keyframes deer-walk-bob {
+@keyframes deer-walk-cycle {
     0%, 100% {
         --deer-bob: 0%;
+        --deer-step: -0.7%;
+        --deer-tilt: -2deg;
     }
     50% {
-        --deer-bob: -2%;
+        --deer-bob: -3%;
+        --deer-step: 0.7%;
+        --deer-tilt: 2deg;
     }
 }
 

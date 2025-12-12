@@ -25,8 +25,19 @@ window.addEventListener('load', () => {
 
         let deer = document.querySelector('.deer');
         let deerWidth = screenWidth * 1.7;
-        deer.style.width = `${deerWidth - (screenWidth * 0.55 * parallaxScrollPercent / 100)}px`;
-        deer.style.setProperty('--deer-x', `-${45 + (5 * parallaxScrollPercent / 100)}%`);
+        const deerProgress = Math.min(parallaxScrollPercent / 100, 1);
+        deer.style.width = `${deerWidth - (screenWidth * 0.9 * deerProgress)}px`;
+
+        const deerStartX = -50;
+        const deerEndX = -125;
+        const deerStartY = 10;
+        const deerEndY = 4;
+
+        const deerX = deerStartX + (deerEndX - deerStartX) * deerProgress;
+        const deerY = deerStartY + (deerEndY - deerStartY) * deerProgress;
+
+        deer.style.setProperty('--deer-x', `${deerX}%`);
+        deer.style.setProperty('--deer-y', `${deerY}%`);
     })
 
     let deerWalkTimeout;
