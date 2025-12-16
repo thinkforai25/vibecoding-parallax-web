@@ -1,5 +1,39 @@
 window.addEventListener('load', () => {
 
+    const skinOptions = ['skin-aurora', 'skin-desert', 'skin-neon'];
+    const skinSelect = document.getElementById('skin-select');
+    const SKIN_STORAGE_KEY = 'vibe-preferred-skin';
+
+    const applySkin = (skinName) => {
+        const nextSkin = skinOptions.includes(skinName) ? skinName : skinOptions[0];
+        document.body.classList.remove(...skinOptions);
+        document.body.classList.add(nextSkin);
+        if (skinSelect) {
+            skinSelect.value = nextSkin;
+        }
+        try {
+            localStorage.setItem(SKIN_STORAGE_KEY, nextSkin);
+        } catch (error) {
+            console.warn('Skin preference could not be saved:', error);
+        }
+    };
+
+    const savedSkin = (() => {
+        try {
+            return localStorage.getItem(SKIN_STORAGE_KEY);
+        } catch (error) {
+            return null;
+        }
+    })();
+
+    applySkin(savedSkin || document.body.className);
+
+    if (skinSelect) {
+        skinSelect.addEventListener('change', (event) => {
+            applySkin(event.target.value);
+        });
+    }
+
     //==============================================Parallax====================================================
 
     window.addEventListener('scroll', () => {
